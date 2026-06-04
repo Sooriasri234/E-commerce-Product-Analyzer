@@ -1,0 +1,31 @@
+Project Title: E-commerce Product Review Analyzer
+
+Category: Classification
+
+Why classification:
+The system predicts a sentiment class for each customer review: Positive, Neutral, or Negative. These are discrete labels, so the project belongs to classification. It is not regression, clustering, or forecasting.
+
+Professional feature preview:
+1. Single-page authentication screen with Login, Register, and Gmail OAuth.
+2. Google Gmail login symbol and OAuth-ready flow.
+3. Secure local registration with hashed passwords.
+4. JWT session handling.
+5. Upload CSV, XLSX, or XLS review datasets.
+6. Automatic detection of review, rating, product, category, and date columns.
+7. Text preprocessing and cleaning.
+8. SQL-based customer satisfaction insights.
+9. Sentiment classification with TF-IDF and Logistic Regression.
+10. Model tuning with GridSearchCV when enough data exists.
+11. Model evaluation with accuracy, classification report, and confusion matrix.
+12. Feature selection with chi-square scoring.
+13. Interactive visualizations for sentiment, category satisfaction, and rating trends.
+14. Compact e-commerce themes: Default, Light, and Dark.
+15. Downloadable analyzed review output.
+16. Per-user analysis history after login.
+
+Recommended demo flow:
+1. Run: streamlit run app.py
+2. Register a new user or configure Gmail OAuth and sign in with Google.
+3. Use the default sample dataset first.
+4. Open Overview, SQL Insights, Classification, Feature Selection, and Data Preview tabs.
+5. Upload your own e-commerce review file and repeat the analysis.

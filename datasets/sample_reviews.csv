@@ -1,0 +1,17 @@
+review_id,product_name,category,rating,review_text,review_date,verified_purchase
+1,Aurora Noise-Cancelling Headphones,Electronics,5,"The sound is crisp, battery life is excellent, and the ear cushions stay comfortable during long work calls.",2026-01-08,Yes
+2,Aurora Noise-Cancelling Headphones,Electronics,2,"The audio is decent but the right side stopped working after two weeks. Support was slow to respond.",2026-01-18,Yes
+3,HomeChef Stainless Steel Blender,Kitchen,4,"Powerful motor and easy cleaning. It gets a little loud with frozen fruit but the smoothies are smooth.",2026-02-01,Yes
+4,HomeChef Stainless Steel Blender,Kitchen,1,"The jar leaked on the first day and the base smelled like burning plastic.",2026-02-11,No
+5,StrideFlex Running Shoes,Fashion,5,"Lightweight, breathable, and perfect for daily runs. The fit is true to size.",2026-02-20,Yes
+6,StrideFlex Running Shoes,Fashion,3,"Comfort is fine, but the sole wore faster than expected after a month.",2026-03-02,Yes
+7,GlowSkin Vitamin C Serum,Beauty,4,"Brightened my skin noticeably and absorbed quickly. Packaging feels premium.",2026-03-12,Yes
+8,GlowSkin Vitamin C Serum,Beauty,2,"I wanted to like it, but it irritated my skin and the dropper was messy.",2026-03-22,Yes
+9,ZenDesk Ergonomic Chair,Furniture,5,"Excellent lumbar support, sturdy frame, and assembly took less than 20 minutes.",2026-04-03,Yes
+10,ZenDesk Ergonomic Chair,Furniture,3,"Good chair overall, but the armrests feel loose and the wheels scratch wooden floors.",2026-04-15,No
+11,PixelNest Smart Doorbell,Electronics,4,"Clear video, reliable alerts, and the mobile app is simple to use.",2026-04-28,Yes
+12,PixelNest Smart Doorbell,Electronics,1,"Notifications arrive late and night vision is blurry. I returned it.",2026-05-09,Yes
+13,PureSip Insulated Bottle,Outdoor,5,"Keeps water cold all day and does not leak in my backpack.",2026-05-18,Yes
+14,PureSip Insulated Bottle,Outdoor,4,"Great bottle with strong insulation. The lid could be easier to clean.",2026-05-25,Yes
+15,NovaTab 11 Tablet,Electronics,2,"The display is bright, but performance lags when multitasking and charging is slow.",2026-05-29,Yes
+16,NovaTab 11 Tablet,Electronics,5,"Fantastic screen, smooth streaming, and strong battery life for travel.",2026-06-01,Yes
