@@ -34,13 +34,19 @@ def get_google_login_url():
 def complete_google_login():
     if not is_google_oauth_configured():
         return None
-    code = st.query_params.get("code")
-    state = st.query_params.get("state")
+
+    # Streamlit query params can be a single value or list; use the stable API
+    params = st.query_params
+    code = params.get("code")[0] if isinstance(params.get("code"), list) else params.get("code")
+    state = params.get("state")[0] if isinstance(params.get("state"), list) else params.get("state")
     if not code:
         return None
+
     expected_state = st.session_state.get("oauth_state")
     if expected_state and state != expected_state:
         st.error("Google sign-in failed because the OAuth state did not match.")
+        # clear query params so error doesn't persist on reload
+        st.query_params.clear()
         return None
 
     token_response = requests.post(
@@ -66,7 +72,10 @@ def complete_google_login():
     )
     if not user_response.ok:
         st.error("Google sign-in failed while reading the Gmail profile.")
+        st.query_params.clear()
         return None
 
     profile = user_response.json()
+    # clear the auth query params now that we've processed them
+    st.query_params.clear()
     return get_or_create_google_user(profile.get("name", ""), profile["email"])
