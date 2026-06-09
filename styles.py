@@ -229,6 +229,32 @@ def apply_theme(mode: str = "Default") -> None:
         [data-testid="stFileUploaderDropzone"] {{
             background: {palette["panel_alt"]} !important;
         }}
+        button,
+        button *,
+        button span,
+        button div,
+        [type="submit"],
+        [type="submit"] *,
+        [data-testid="stFormSubmitButton"],
+        [data-testid="stFormSubmitButton"] *,
+        [data-testid="stButton"] button,
+        [data-testid="stButton"] button *,
+        [data-testid="stLinkButton"],
+        [data-testid="stLinkButton"] *,
+        .stApp button,
+        .stApp button *,
+        .stApp [data-testid="stFormSubmitButton"],
+        .stApp [data-testid="stFormSubmitButton"] *,
+        .stApp [data-testid="stButton"] button,
+        .stApp [data-testid="stButton"] button *,
+        .stApp [data-testid="stLinkButton"],
+        .stApp [data-testid="stLinkButton"] * {{
+            background: {palette["accent"]} !important;
+            background-image: none !important;
+            color: #ffffff !important;
+            border-color: {palette["accent"]} !important;
+            box-shadow: none !important;
+        }}
         </style>
         """,
         unsafe_allow_html=True,
