@@ -183,21 +183,19 @@ def apply_theme(mode: str = "Default") -> None:
             color: {palette["accent"]} !important;
             border-bottom: 3px solid {palette["accent"]} !important;
         }}
-        .auth-shell ~ * form button,
-        .auth-shell ~ * form button *,
-        .auth-shell ~ * a[data-testid="stLinkButton"],
-        .auth-shell ~ * a[data-testid="stLinkButton"] *,
-        .auth-shell ~ * [data-testid="stLinkButton"] button,
-        .auth-shell ~ * [data-testid="stLinkButton"] button *,
-        .auth-shell ~ * [data-testid="stLinkButton"] span,
-        .auth-shell ~ * [data-testid="stLinkButton"] span * {{
+        .stApp form button,
+        .stApp form button *,
+        .stApp a[data-testid="stLinkButton"],
+        .stApp a[data-testid="stLinkButton"] *,
+        .stApp [data-testid="stLinkButton"] button,
+        .stApp [data-testid="stLinkButton"] button * {{
             background-color: {palette["accent"]} !important;
             color: #ffffff !important;
             border-color: {palette["accent"]} !important;
             background-image: none !important;
             box-shadow: none !important;
         }}
-        .auth-shell ~ * form button {{
+        .stApp form button {{
             border-radius: 8px !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
