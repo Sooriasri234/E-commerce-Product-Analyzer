@@ -184,37 +184,47 @@ def apply_theme(mode: str = "Default") -> None:
             border-bottom: 3px solid {palette["accent"]} !important;
         }}
         .stButton button,
+        .stButton button[disabled],
+        .stButton button:disabled,
+        .stButton button *,
+        .stButton button[disabled] *,
+        .stButton button:disabled *,
         .stDownloadButton button,
+        .stDownloadButton button *,
         a[data-testid="stLinkButton"],
         a[data-testid="stLinkButton"] button,
-        [data-testid="stFileUploaderDropzone"] button {{
+        a[data-testid="stLinkButton"] button *,
+        a[data-testid="stLinkButton"] > div,
+        a[data-testid="stLinkButton"] > span,
+        a[data-testid="stLinkButton"] *,
+        [data-testid="stFileUploaderDropzone"] button,
+        [data-testid="stFileUploaderDropzone"] button * {{
             border-radius: 8px !important;
             border-color: {palette["accent"]} !important;
-            color: {palette["text"]} !important;
-            background: {palette["panel"]} !important;
+            color: #ffffff !important;
+            background: {palette["accent"]} !important;
+            background-image: none !important;
         }}
-        .stApp .stButton button,
-        .stApp .stButton button *,
-        .stApp .stDownloadButton button,
-        .stApp .stDownloadButton button *,
-        .stApp button[data-testid="stFormSubmitButton"],
-        .stApp button[data-testid="stFormSubmitButton"] *,
-        .stApp a[data-testid="stLinkButton"],
-        .stApp a[data-testid="stLinkButton"] *,
-        .stApp a[data-testid="stLinkButton"] button,
-        .stApp a[data-testid="stLinkButton"] > div,
-        .stApp a[data-testid="stLinkButton"] > span,
-        .stApp [data-testid="stLinkButton"] button,
-        .stApp [data-testid="stLinkButton"] span,
-        .stApp [data-testid="stLinkButton"] * {{
+        .stButton button[kind="primary"],
+        .stButton button[type="submit"],
+        .stButton button[data-testid="stFormSubmitButton"],
+        .stButton button[role="button"],
+        .stButton button[kind="primary"] *,
+        .stButton button[type="submit"] *,
+        .stButton button[data-testid="stFormSubmitButton"] *,
+        .stButton button[role="button"] *,
+        .stDownloadButton button,
+        .stDownloadButton button *,
+        a[data-testid="stLinkButton"],
+        a[data-testid="stLinkButton"] *,
+        [data-testid="stLinkButton"] button,
+        [data-testid="stLinkButton"] button *,
+        [data-testid="stLinkButton"] span,
+        [data-testid="stLinkButton"] span *,
+        [data-testid="stLinkButton"] * {{
             background: {palette["accent"]} !important;
             color: #ffffff !important;
             border-color: {palette["accent"]} !important;
-        }}
-        .stApp .stButton button[kind="primary"] *,
-        .stApp .stButton button[type="submit"] *,
-        .stApp .stButton button[data-testid="stFormSubmitButton"] * {{
-            color: #ffffff !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
             background: {palette["panel_alt"]} !important;
