@@ -183,34 +183,21 @@ def apply_theme(mode: str = "Default") -> None:
             color: {palette["accent"]} !important;
             border-bottom: 3px solid {palette["accent"]} !important;
         }}
-        .stApp .stButton,
-        .stApp .stButton button,
-        .stApp .stButton button:disabled,
-        .stApp .stButton button *,
-        .stApp .stButton button:disabled *,
-        .stApp .stDownloadButton,
-        .stApp .stDownloadButton button,
-        .stApp .stDownloadButton button *,
-        .stApp a[data-testid="stLinkButton"],
-        .stApp a[data-testid="stLinkButton"] *,
-        .stApp [data-testid="stLinkButton"] button,
-        .stApp [data-testid="stLinkButton"] button *,
-        .stApp button[type="submit"],
-        .stApp button[type="submit"] * {{
+        .auth-shell ~ * form button,
+        .auth-shell ~ * form button *,
+        .auth-shell ~ * a[data-testid="stLinkButton"],
+        .auth-shell ~ * a[data-testid="stLinkButton"] *,
+        .auth-shell ~ * [data-testid="stLinkButton"] button,
+        .auth-shell ~ * [data-testid="stLinkButton"] button *,
+        .auth-shell ~ * [data-testid="stLinkButton"] span,
+        .auth-shell ~ * [data-testid="stLinkButton"] span * {{
             background-color: {palette["accent"]} !important;
+            color: #ffffff !important;
             border-color: {palette["accent"]} !important;
             background-image: none !important;
-            color: #ffffff !important;
             box-shadow: none !important;
         }}
-        .stApp .stButton button,
-        .stApp .stButton button *,
-        .stApp .stDownloadButton button,
-        .stApp .stDownloadButton button *,
-        .stApp a[data-testid="stLinkButton"] button,
-        .stApp a[data-testid="stLinkButton"] button *,
-        .stApp [data-testid="stLinkButton"] button,
-        .stApp [data-testid="stLinkButton"] button * {{
+        .auth-shell ~ * form button {{
             border-radius: 8px !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
