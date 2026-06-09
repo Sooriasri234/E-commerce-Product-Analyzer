@@ -118,7 +118,14 @@ def auth_page() -> None:
     with gmail_tab:
         st.markdown('<div class="google-badge"><span class="google-mark">G</span><span>Sign in with your Gmail account</span></div>', unsafe_allow_html=True)
         if is_google_oauth_configured():
-            st.link_button("Continue with Google", get_google_login_url(), use_container_width=True)
+            login_url = get_google_login_url()
+            st.markdown(
+                f'''<a class="google-auth-link" href="{login_url}" target="_blank" rel="noreferrer">
+                    <span class="google-auth-icon">G</span>
+                    Continue with Google
+                </a>''',
+                unsafe_allow_html=True,
+            )
         else:
             st.info("Google OAuth is ready in the code. Add Google client settings in `.env` to activate the Gmail login button.")
             st.code(

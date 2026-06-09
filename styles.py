@@ -132,6 +132,37 @@ def apply_theme(mode: str = "Default") -> None:
             background: #ffffff;
             border: 1px solid #cfd8e3;
         }}
+        .google-auth-link {{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .75rem;
+            width: 100%;
+            max-width: 100%;
+            padding: .9rem 1rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            color: #ffffff !important;
+            background-color: {palette["accent"]} !important;
+            border: 1px solid {palette["accent"]} !important;
+            box-shadow: 0 8px 18px rgba(56, 189, 248, 0.18);
+        }}
+        .google-auth-link:hover {{
+            opacity: .92;
+        }}
+        .google-auth-icon {{
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            color: #4285f4;
+            font-weight: 800;
+            font-size: 1rem;
+        }}
         div[data-testid="stMetric"],
         [data-testid="stFileUploaderDropzone"],
         [data-testid="stDataFrame"],
