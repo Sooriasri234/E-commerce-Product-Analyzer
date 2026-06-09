@@ -183,77 +183,38 @@ def apply_theme(mode: str = "Default") -> None:
             color: {palette["accent"]} !important;
             border-bottom: 3px solid {palette["accent"]} !important;
         }}
-        .stButton button,
-        .stButton button[disabled],
-        .stButton button:disabled,
-        .stButton button *,
-        .stButton button[disabled] *,
-        .stButton button:disabled *,
-        .stDownloadButton button,
-        .stDownloadButton button *,
-        a[data-testid="stLinkButton"],
-        a[data-testid="stLinkButton"] button,
-        a[data-testid="stLinkButton"] button *,
-        a[data-testid="stLinkButton"] > div,
-        a[data-testid="stLinkButton"] > span,
-        a[data-testid="stLinkButton"] *,
-        [data-testid="stFileUploaderDropzone"] button,
-        [data-testid="stFileUploaderDropzone"] button * {{
-            border-radius: 8px !important;
+        .stApp .stButton,
+        .stApp .stButton button,
+        .stApp .stButton button:disabled,
+        .stApp .stButton button *,
+        .stApp .stButton button:disabled *,
+        .stApp .stDownloadButton,
+        .stApp .stDownloadButton button,
+        .stApp .stDownloadButton button *,
+        .stApp a[data-testid="stLinkButton"],
+        .stApp a[data-testid="stLinkButton"] *,
+        .stApp [data-testid="stLinkButton"] button,
+        .stApp [data-testid="stLinkButton"] button *,
+        .stApp button[type="submit"],
+        .stApp button[type="submit"] * {{
+            background-color: {palette["accent"]} !important;
             border-color: {palette["accent"]} !important;
-            color: #ffffff !important;
-            background: {palette["accent"]} !important;
             background-image: none !important;
-        }}
-        .stButton button[kind="primary"],
-        .stButton button[type="submit"],
-        .stButton button[data-testid="stFormSubmitButton"],
-        .stButton button[role="button"],
-        .stButton button[kind="primary"] *,
-        .stButton button[type="submit"] *,
-        .stButton button[data-testid="stFormSubmitButton"] *,
-        .stButton button[role="button"] *,
-        .stDownloadButton button,
-        .stDownloadButton button *,
-        a[data-testid="stLinkButton"],
-        a[data-testid="stLinkButton"] *,
-        [data-testid="stLinkButton"] button,
-        [data-testid="stLinkButton"] button *,
-        [data-testid="stLinkButton"] span,
-        [data-testid="stLinkButton"] span *,
-        [data-testid="stLinkButton"] * {{
-            background: {palette["accent"]} !important;
             color: #ffffff !important;
-            border-color: {palette["accent"]} !important;
+            box-shadow: none !important;
+        }}
+        .stApp .stButton button,
+        .stApp .stButton button *,
+        .stApp .stDownloadButton button,
+        .stApp .stDownloadButton button *,
+        .stApp a[data-testid="stLinkButton"] button,
+        .stApp a[data-testid="stLinkButton"] button *,
+        .stApp [data-testid="stLinkButton"] button,
+        .stApp [data-testid="stLinkButton"] button * {{
+            border-radius: 8px !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
             background: {palette["panel_alt"]} !important;
-        }}
-        button,
-        button *,
-        button span,
-        button div,
-        [type="submit"],
-        [type="submit"] *,
-        [data-testid="stFormSubmitButton"],
-        [data-testid="stFormSubmitButton"] *,
-        [data-testid="stButton"] button,
-        [data-testid="stButton"] button *,
-        [data-testid="stLinkButton"],
-        [data-testid="stLinkButton"] *,
-        .stApp button,
-        .stApp button *,
-        .stApp [data-testid="stFormSubmitButton"],
-        .stApp [data-testid="stFormSubmitButton"] *,
-        .stApp [data-testid="stButton"] button,
-        .stApp [data-testid="stButton"] button *,
-        .stApp [data-testid="stLinkButton"],
-        .stApp [data-testid="stLinkButton"] * {{
-            background: {palette["accent"]} !important;
-            background-image: none !important;
-            color: #ffffff !important;
-            border-color: {palette["accent"]} !important;
-            box-shadow: none !important;
         }}
         </style>
         """,
