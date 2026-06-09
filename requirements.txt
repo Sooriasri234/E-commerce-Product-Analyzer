@@ -8,5 +8,6 @@ PyJWT==2.8.0
 passlib==1.7.4
 requests==2.32.3
 python-dotenv==1.0.1
-pillow==10.3.0
+pillow>=10.0,<10.4
+
 
