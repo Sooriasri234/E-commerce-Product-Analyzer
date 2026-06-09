@@ -190,6 +190,8 @@ def apply_theme(mode: str = "Default") -> None:
             border-bottom: 3px solid {palette["accent"]} !important;
             background: {palette["panel"]} !important;
         }}
+        .stApp .stButton button,
+        .stApp .stButton button *,
         .stApp form button,
         .stApp form button *,
         .stApp a[data-testid="stLinkButton"],
@@ -204,6 +206,7 @@ def apply_theme(mode: str = "Default") -> None:
             background-image: none !important;
             box-shadow: none !important;
         }}
+        .stApp .stButton button,
         .stApp form button {{
             border-radius: 8px !important;
         }}
