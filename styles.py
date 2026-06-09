@@ -193,27 +193,27 @@ def apply_theme(mode: str = "Default") -> None:
             color: {palette["text"]} !important;
             background: {palette["panel"]} !important;
         }}
-        .stButton button[kind="primary"],
-        .stButton button[type="submit"],
-        .stButton button[data-testid="stFormSubmitButton"],
-        .stButton button[role="button"],
-        .stButton button[data-testid="stFormSubmitButton"] *,
-        .stDownloadButton button,
-        a[data-testid="stLinkButton"],
-        a[data-testid="stLinkButton"] button,
-        a[data-testid="stLinkButton"] > div,
-        a[data-testid="stLinkButton"] > span,
-        a[data-testid="stLinkButton"] *,
-        [data-testid="stLinkButton"] button,
-        [data-testid="stLinkButton"] span,
-        [data-testid="stLinkButton"] * {{
+        .stApp .stButton button,
+        .stApp .stButton button *,
+        .stApp .stDownloadButton button,
+        .stApp .stDownloadButton button *,
+        .stApp button[data-testid="stFormSubmitButton"],
+        .stApp button[data-testid="stFormSubmitButton"] *,
+        .stApp a[data-testid="stLinkButton"],
+        .stApp a[data-testid="stLinkButton"] *,
+        .stApp a[data-testid="stLinkButton"] button,
+        .stApp a[data-testid="stLinkButton"] > div,
+        .stApp a[data-testid="stLinkButton"] > span,
+        .stApp [data-testid="stLinkButton"] button,
+        .stApp [data-testid="stLinkButton"] span,
+        .stApp [data-testid="stLinkButton"] * {{
             background: {palette["accent"]} !important;
             color: #ffffff !important;
             border-color: {palette["accent"]} !important;
         }}
-        .stButton button[kind="primary"] *,
-        .stButton button[type="submit"] *,
-        .stButton button[data-testid="stFormSubmitButton"] * {{
+        .stApp .stButton button[kind="primary"] *,
+        .stApp .stButton button[type="submit"] *,
+        .stApp .stButton button[data-testid="stFormSubmitButton"] * {{
             color: #ffffff !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
