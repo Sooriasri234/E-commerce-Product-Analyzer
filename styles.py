@@ -212,13 +212,27 @@ def apply_theme(mode: str = "Default") -> None:
         button[title="Dark mode"],
         button[title="Default mode"] *,
         button[title="Light mode"] *,
-        button[title="Dark mode"] * {{
+        button[title="Dark mode"] *,
+        [title="Default mode"],
+        [title="Light mode"],
+        [title="Dark mode"],
+        [title="Default mode"] *,
+        [title="Light mode"] *,
+        [title="Dark mode"] *,
+        [aria-label="Default mode"],
+        [aria-label="Light mode"],
+        [aria-label="Dark mode"],
+        [aria-label="Default mode"] *,
+        [aria-label="Light mode"] *,
+        [aria-label="Dark mode"] * {{
             background-color: {palette["accent"]} !important;
             color: #ffffff !important;
             border-color: {palette["accent"]} !important;
             box-shadow: none !important;
         }}
-        button[title="Default mode"] {{
+        button[title="Default mode"],
+        [title="Default mode"],
+        [aria-label="Default mode"] {{
             border-radius: 8px !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
