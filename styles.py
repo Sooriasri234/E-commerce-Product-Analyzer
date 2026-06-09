@@ -186,6 +186,7 @@ def apply_theme(mode: str = "Default") -> None:
         .stButton button,
         .stDownloadButton button,
         a[data-testid="stLinkButton"],
+        a[data-testid="stLinkButton"] button,
         [data-testid="stFileUploaderDropzone"] button {{
             border-radius: 8px !important;
             border-color: {palette["accent"]} !important;
@@ -193,9 +194,13 @@ def apply_theme(mode: str = "Default") -> None:
             background: {palette["panel"]} !important;
         }}
         .stButton button[kind="primary"],
-        .stDownloadButton button {{
+        .stButton button[type="submit"],
+        .stDownloadButton button,
+        a[data-testid="stLinkButton"],
+        a[data-testid="stLinkButton"] button {{
             background: {palette["accent"]} !important;
             color: #ffffff !important;
+            border-color: {palette["accent"]} !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
             background: {palette["panel_alt"]} !important;
