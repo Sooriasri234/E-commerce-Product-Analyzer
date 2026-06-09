@@ -198,7 +198,12 @@ def apply_theme(mode: str = "Default") -> None:
         .stDownloadButton button,
         a[data-testid="stLinkButton"],
         a[data-testid="stLinkButton"] button,
-        a[data-testid="stLinkButton"] * {{
+        a[data-testid="stLinkButton"] > div,
+        a[data-testid="stLinkButton"] > span,
+        a[data-testid="stLinkButton"] *,
+        [data-testid="stLinkButton"] button,
+        [data-testid="stLinkButton"] span,
+        [data-testid="stLinkButton"] * {{
             background: {palette["accent"]} !important;
             color: #ffffff !important;
             border-color: {palette["accent"]} !important;
