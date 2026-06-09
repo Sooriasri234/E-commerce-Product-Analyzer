@@ -195,6 +195,9 @@ def apply_theme(mode: str = "Default") -> None:
         }}
         .stButton button[kind="primary"],
         .stButton button[type="submit"],
+        .stButton button[data-testid="stFormSubmitButton"],
+        .stButton button[role="button"],
+        .stButton button[data-testid="stFormSubmitButton"] *,
         .stDownloadButton button,
         a[data-testid="stLinkButton"],
         a[data-testid="stLinkButton"] button,
@@ -207,6 +210,11 @@ def apply_theme(mode: str = "Default") -> None:
             background: {palette["accent"]} !important;
             color: #ffffff !important;
             border-color: {palette["accent"]} !important;
+        }}
+        .stButton button[kind="primary"] *,
+        .stButton button[type="submit"] *,
+        .stButton button[data-testid="stFormSubmitButton"] * {{
+            color: #ffffff !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
             background: {palette["panel_alt"]} !important;
