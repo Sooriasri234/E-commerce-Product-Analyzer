@@ -168,20 +168,27 @@ def apply_theme(mode: str = "Default") -> None:
             color: {palette["text"]} !important;
             border: 1px solid {palette["border"]} !important;
         }}
-        .stTabs [data-baseweb="tab-list"] {{
+        .stTabs [data-baseweb="tab-list"],
+        .stTabs [role="tablist"] {{
             gap: .25rem;
             border-bottom-color: {palette["border"]} !important;
         }}
-        .stTabs [data-baseweb="tab"] {{
-            background: {palette["panel"]};
-            border: 1px solid {palette["border"]};
-            border-radius: 8px 8px 0 0;
-            padding: .6rem 1rem;
-            color: {palette["text"]};
+        .stTabs [data-baseweb="tab"],
+        .stTabs [role="tab"],
+        .stTabs button[role="tab"],
+        .stTabs button {{
+            background: {palette["panel"]} !important;
+            border: 1px solid {palette["border"]} !important;
+            border-radius: 8px 8px 0 0 !important;
+            padding: .6rem 1rem !important;
+            color: {palette["text"]} !important;
         }}
-        .stTabs [aria-selected="true"] {{
+        .stTabs [aria-selected="true"],
+        .stTabs button[aria-selected="true"],
+        .stTabs [role="tab"][aria-selected="true"] {{
             color: {palette["accent"]} !important;
             border-bottom: 3px solid {palette["accent"]} !important;
+            background: {palette["panel"]} !important;
         }}
         .stApp form button,
         .stApp form button *,
