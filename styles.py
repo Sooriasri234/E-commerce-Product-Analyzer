@@ -194,6 +194,8 @@ def apply_theme(mode: str = "Default") -> None:
         .stApp form button *,
         .stApp a[data-testid="stLinkButton"],
         .stApp a[data-testid="stLinkButton"] *,
+        .stApp *[data-testid="stLinkButton"],
+        .stApp *[data-testid="stLinkButton"] *,
         .stApp [data-testid="stLinkButton"] button,
         .stApp [data-testid="stLinkButton"] button * {{
             background-color: {palette["accent"]} !important;
@@ -203,6 +205,20 @@ def apply_theme(mode: str = "Default") -> None:
             box-shadow: none !important;
         }}
         .stApp form button {{
+            border-radius: 8px !important;
+        }}
+        button[title="Default mode"],
+        button[title="Light mode"],
+        button[title="Dark mode"],
+        button[title="Default mode"] *,
+        button[title="Light mode"] *,
+        button[title="Dark mode"] * {{
+            background-color: {palette["accent"]} !important;
+            color: #ffffff !important;
+            border-color: {palette["accent"]} !important;
+            box-shadow: none !important;
+        }}
+        button[title="Default mode"] {{
             border-radius: 8px !important;
         }}
         [data-testid="stFileUploaderDropzone"] {{
