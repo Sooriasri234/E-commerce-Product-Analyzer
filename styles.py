@@ -272,6 +272,9 @@ def apply_theme(mode: str = "Default") -> None:
         [data-testid="stFileUploaderDropzone"] {{
             background: {palette["panel_alt"]} !important;
         }}
+        [data-testid="stFileUploaderDropzone"] button {{
+            color: #172033 !important;
+        }}
         </style>
         """,
         unsafe_allow_html=True,
