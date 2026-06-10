@@ -6,6 +6,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+from advanced_features import (
+    analyze_aspects,
+    authenticity_scores,
+    benchmark_brands,
+    draft_support_response,
+    generate_report_pdf,
+    safe_ai_query,
+    scrape_reviews_from_url,
+)
 from auth import authenticate_user, create_access_token, decode_access_token, register_user
 from data_analysis.sql_insights import keyword_signal_table, product_risk_table, satisfaction_summary
 from database import get_recent_runs, init_db, record_analysis_run
@@ -29,6 +38,8 @@ def initialize_state() -> None:
     st.session_state.setdefault("user", None)
     st.session_state.setdefault("last_recorded_signature", None)
     st.session_state.setdefault("theme_mode", "Default")
+    st.session_state.setdefault("live_review_df", None)
+    st.session_state.setdefault("live_review_source", None)
 
 
 def hydrate_user_from_token() -> None:
@@ -185,9 +196,24 @@ def analyzer_page() -> None:
     st.caption("A professional Streamlit analytics workspace for SQL-based review insights, text classification, feature selection, model evaluation, and customer satisfaction visualization.")
 
     uploaded = st.file_uploader("Upload customer reviews CSV or Excel", type=["csv", "xlsx", "xls"])
+
+    with st.expander("Live review import from product URL"):
+        product_url = st.text_input("Amazon, Shopify, eBay, or product page URL", placeholder="https://example.com/product")
+        if st.button("Fetch live reviews", use_container_width=True):
+            try:
+                st.session_state.live_review_df = scrape_reviews_from_url(product_url)
+                st.session_state.live_review_source = product_url
+                st.success(f"Imported {len(st.session_state.live_review_df)} live review candidates.")
+            except Exception as exc:
+                st.error(f"Could not import reviews from URL: {exc}")
+
     try:
-        raw_df = load_dataset(uploaded)
-        file_name = uploaded.name if uploaded else "sample_reviews.csv"
+        if st.session_state.live_review_df is not None and uploaded is None:
+            raw_df = st.session_state.live_review_df
+            file_name = st.session_state.live_review_source or "live_reviews"
+        else:
+            raw_df = load_dataset(uploaded)
+            file_name = uploaded.name if uploaded else "sample_reviews.csv"
         normalized = normalize_review_dataset(raw_df)
     except Exception as exc:
         st.error(str(exc))
@@ -198,6 +224,8 @@ def analyzer_page() -> None:
         return
 
     analyzed, model, tuning_info = add_predictions(normalized)
+    aspect_summary, aspect_detail = analyze_aspects(analyzed)
+    authenticity = authenticity_scores(analyzed)
     processed_path = save_processed_dataset(analyzed)
     record_run_once(file_name, analyzed)
 
@@ -211,7 +239,21 @@ def analyzer_page() -> None:
     metric_cols[2].metric("Positive sentiment", f"{positive_rate:.1f}%")
     metric_cols[3].metric("Negative sentiment", f"{negative_rate:.1f}%")
 
-    tabs = st.tabs(["Overview", "SQL Insights", "Classification", "Feature Selection", "Customer Feedback", "Data Preview"])
+    tabs = st.tabs(
+        [
+            "Overview",
+            "SQL Insights",
+            "ABSA",
+            "Support Drafts",
+            "Authenticity",
+            "Benchmarking",
+            "Reports",
+            "Classification",
+            "Feature Selection",
+            "Customer Feedback",
+            "Data Preview",
+        ]
+    )
 
     with tabs[0]:
         left, right = st.columns([1, 1])
@@ -226,7 +268,8 @@ def analyzer_page() -> None:
 
     with tabs[1]:
         st.subheader("SQL-generated customer satisfaction summary")
-        st.dataframe(satisfaction_summary(analyzed), use_container_width=True, hide_index=True)
+        sql_summary = satisfaction_summary(analyzed)
+        st.dataframe(sql_summary, use_container_width=True, hide_index=True)
         col_a, col_b = st.columns([1, 1])
         with col_a:
             st.write("Products needing attention")
@@ -246,7 +289,121 @@ def analyzer_page() -> None:
                 except Exception as exc:
                     st.error(f"SQL error: {exc}")
 
+        with st.expander("Ask with plain English"):
+            question = st.text_input(
+                "AI data assistant question",
+                placeholder="Show me all categories where the average rating dropped below 3 in March",
+            )
+            if st.button("Translate and run", use_container_width=True):
+                if not question.strip():
+                    st.warning("Enter a question first.")
+                else:
+                    try:
+                        generated_sql, answer = safe_ai_query(analyzed, question)
+                        st.code(generated_sql, language="sql")
+                        st.dataframe(answer, use_container_width=True, hide_index=True)
+                    except Exception as exc:
+                        st.error(f"AI data assistant error: {exc}")
+
     with tabs[2]:
+        st.subheader("Aspect-Based Sentiment Analysis")
+        st.caption("Sentiment is broken down by product aspects such as performance, battery life, quality, shipping, support, price, comfort, design, and ease of use.")
+        if aspect_summary.empty:
+            st.info("No aspect keywords were detected in the current reviews.")
+        else:
+            st.dataframe(aspect_summary, use_container_width=True, hide_index=True)
+            selected_aspect = st.selectbox("Inspect reviews for aspect", aspect_summary["aspect"].tolist())
+            st.dataframe(
+                aspect_detail[aspect_detail["aspect"] == selected_aspect][
+                    ["product_name", "rating", "aspect_sentiment", "matched_terms", "review_text"]
+                ],
+                use_container_width=True,
+                hide_index=True,
+            )
+
+    with tabs[3]:
+        st.subheader("Automated Customer Support Drafts")
+        negative_reviews = analyzed[analyzed["predicted_sentiment"] == "Negative"].copy()
+        if negative_reviews.empty:
+            st.success("No negative reviews detected in the current dataset.")
+        else:
+            negative_reviews["label"] = negative_reviews.apply(
+                lambda row: f"{row.name} | {row['product_name']} | {row['rating']} stars | {row['review_text'][:70]}",
+                axis=1,
+            )
+            selected = st.selectbox("Choose a negative review", negative_reviews["label"].tolist())
+            selected_index = int(selected.split("|", 1)[0].strip())
+            selected_review = analyzed.loc[selected_index]
+            st.write(selected_review["review_text"])
+            st.text_area("Draft seller response", draft_support_response(selected_review, aspect_detail), height=190)
+
+    with tabs[4]:
+        st.subheader("Review Authenticity / Fake Review Detector")
+        st.caption("A heuristic anomaly model flags duplicate text, short reviews, rating/sentiment mismatches, heavy punctuation, and review bursts.")
+        risk_cols = st.columns(3)
+        risk_cols[0].metric("High risk", int((authenticity["authenticity_label"] == "High risk").sum()))
+        risk_cols[1].metric("Medium risk", int((authenticity["authenticity_label"] == "Medium risk").sum()))
+        risk_cols[2].metric("Average risk score", f"{authenticity['authenticity_risk'].mean():.1f}/100")
+        st.dataframe(
+            authenticity[
+                [
+                    "product_name",
+                    "rating",
+                    "predicted_sentiment",
+                    "authenticity_risk",
+                    "authenticity_label",
+                    "risk_reasons",
+                    "review_text",
+                ]
+            ].sort_values("authenticity_risk", ascending=False),
+            use_container_width=True,
+            hide_index=True,
+        )
+
+    with tabs[5]:
+        st.subheader("Competitor Benchmarking")
+        st.caption("Upload one dataset per brand to compare rating, sentiment, and aspect-level weakness side-by-side.")
+        brand_files = st.file_uploader(
+            "Upload competitor CSV or Excel files",
+            type=["csv", "xlsx", "xls"],
+            accept_multiple_files=True,
+            key="benchmark_uploads",
+        )
+        if brand_files:
+            datasets = {}
+            for file in brand_files:
+                try:
+                    datasets[Path(file.name).stem] = load_dataset(file)
+                except Exception as exc:
+                    st.warning(f"Skipped {file.name}: {exc}")
+            if datasets:
+                brand_summary, brand_aspects = benchmark_brands(datasets)
+                st.write("Brand performance")
+                st.dataframe(brand_summary, use_container_width=True, hide_index=True)
+                if not brand_aspects.empty:
+                    st.write("Aspect weakness by brand")
+                    st.dataframe(brand_aspects, use_container_width=True, hide_index=True)
+        else:
+            st.info("Upload two or more brand datasets to start a benchmark.")
+
+    with tabs[6]:
+        st.subheader("Automated PDF / Email Reporting")
+        st.caption("Generate a concise PDF report from the current dashboard, sentiment mix, SQL summary, and ABSA results.")
+        report_pdf = generate_report_pdf(analyzed, sql_summary, aspect_summary)
+        st.download_button(
+            "Generate Report PDF",
+            report_pdf,
+            file_name="review_analyzer_report.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+        )
+        email_to = st.text_input("Stakeholder email", placeholder="manager@example.com")
+        subject = "Weekly review analyzer report"
+        body = "The latest review analyzer PDF report is ready. Please download it from the dashboard and attach it to this email."
+        if email_to:
+            st.link_button("Open email draft", f"mailto:{email_to}?subject={subject}&body={body}", use_container_width=True)
+
+    with tabs[7]:
         st.subheader("Text classification model")
         st.write("Target label is derived from rating: 4-5 Positive, 3 Neutral, 1-2 Negative.")
         eval_result = evaluate_model(model, analyzed)
@@ -260,7 +417,7 @@ def analyzer_page() -> None:
         st.plotly_chart(confusion_heatmap(eval_result.confusion, eval_result.labels), use_container_width=True)
         st.dataframe(eval_result.report, use_container_width=True)
 
-    with tabs[3]:
+    with tabs[8]:
         st.subheader("Important terms selected with TF-IDF and chi-square")
         try:
             terms = top_discriminative_terms(analyzed["clean_review"], analyzed["rating_sentiment"])
@@ -268,7 +425,7 @@ def analyzer_page() -> None:
         except Exception as exc:
             st.warning(f"Feature selection needs more text variety: {exc}")
 
-    with tabs[4]:
+    with tabs[9]:
         st.subheader("Customer Feedback Themes & Insights")
         st.markdown("Automatically extracted themes from customer reviews to identify what customers praise and what they complain about.")
         
@@ -332,7 +489,7 @@ def analyzer_page() -> None:
             for kw in keywords.get("neutral", []):
                 st.caption(f"{kw['word']} ({kw['importance']})")
 
-    with tabs[5]:
+    with tabs[10]:
         st.subheader("Processed review data")
         st.caption(f"Processed dataset saved to {Path(processed_path).as_posix()}")
         st.dataframe(

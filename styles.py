@@ -272,8 +272,14 @@ def apply_theme(mode: str = "Default") -> None:
         [data-testid="stFileUploaderDropzone"] {{
             background: {palette["panel_alt"]} !important;
         }}
-        [data-testid="stFileUploaderDropzone"] button {{
-            color: #172033 !important;
+        [data-testid="stFileUploaderDropzone"] button,
+        [data-testid="stFileUploaderDropzone"] button *,
+        [data-testid="stFileUploaderDropzone"] [data-testid="baseButton-secondary"],
+        [data-testid="stFileUploaderDropzone"] [data-testid="baseButton-secondary"] * {{
+            background-color: {palette["accent"]} !important;
+            border-color: {palette["accent"]} !important;
+            color: #ffffff !important;
+            opacity: 1 !important;
         }}
         </style>
         """,
