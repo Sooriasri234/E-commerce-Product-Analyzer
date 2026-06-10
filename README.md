@@ -27,10 +27,14 @@ It is not primarily regression because the output is not a continuous numeric va
 - Model tuning with GridSearchCV when enough data is available.
 - Model evaluation with accuracy, classification report, and confusion matrix.
 - Feature selection using TF-IDF and chi-square term scoring.
+- Feedback Theme Analysis using extracts and clusters common topics from positive and negative reviews using TF-IDF + KMeans clustering to identify key customer pain points and strengths.
+- Actionable Recommendations that generates business recommendations based on feedback themes, categorized as Reinforce (positive feedback), Address (negative feedback), and Health Check (overall sentiment health).
+- Keyword Insights used to identify the most frequent and important keywords per sentiment for quick actionable insights.
 - Interactive Plotly dashboards for sentiment mix, category satisfaction, and rating trends.
 - Compact e-commerce mode selector with Default, Light, and Dark options.
 - Processed review export as CSV.
 - Analysis history stored per authenticated user.
+
 
 ## Folder Structure
 
@@ -55,6 +59,7 @@ deployment/
 app.py
 auth.py
 database.py
+feedback_analyzer.py
 google_oauth.py
 styles.py
 requirements.txt
