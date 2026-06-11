@@ -1,6 +1,6 @@
 # E-commerce Product Review Analyzer
 
-A professional Streamlit project for analyzing e-commerce product reviews with authentication, Gmail OAuth, SQL insights, text classification, feature selection, model evaluation, model tuning, and interactive customer satisfaction dashboards.
+A professional Streamlit project for analyzing e-commerce product reviews with authentication, Gmail OAuth, SQL insights, text classification, feature selection, model evaluation, model tuning, aspect-based sentiment analysis, review authenticity scoring, competitor benchmarking, automated reports, and interactive customer satisfaction dashboards.
 
 ## Project Category
 
@@ -23,18 +23,60 @@ It is not primarily regression because the output is not a continuous numeric va
 - Upload your own CSV, XLSX, or XLS review dataset.
 - Automatic column detection for review text, ratings, product names, categories, and review dates.
 - SQL analytics over the cleaned review table using SQLite.
+- Plain-English SQL assistant that converts common business questions into safe read-only SQL queries.
 - Sentiment classification with TF-IDF and Logistic Regression.
 - Model tuning with GridSearchCV when enough data is available.
+- Single-class fallback model for small or one-sentiment datasets so imports do not crash the analyzer.
 - Model evaluation with accuracy, classification report, and confusion matrix.
 - Feature selection using TF-IDF and chi-square term scoring.
+- Aspect-Based Sentiment Analysis (ABSA) for product aspects such as performance, battery life, quality, shipping, customer service, price, comfort, design, and ease of use.
+- Automated customer support response drafts for negative reviews, with product-specific and issue-aware wording.
+- Review Authenticity / Fake Review Detector that flags duplicate text, very short reviews, rating/sentiment mismatches, heavy punctuation, and review bursts.
+- Competitor Benchmarking for comparing multiple uploaded brand datasets side-by-side by rating, sentiment, and aspect weakness.
+- Automated PDF reporting that summarizes the current dashboard, sentiment mix, SQL insights, and ABSA results.
+- Email draft shortcut for sharing weekly stakeholder reports.
+- Live review import from product URLs, including Amazon, Shopify, eBay, or generic product pages when reviews are available in the page HTML.
 - Feedback Theme Analysis using extracts and clusters common topics from positive and negative reviews using TF-IDF + KMeans clustering to identify key customer pain points and strengths.
 - Actionable Recommendations that generates business recommendations based on feedback themes, categorized as Reinforce (positive feedback), Address (negative feedback), and Health Check (overall sentiment health).
 - Keyword Insights used to identify the most frequent and important keywords per sentiment for quick actionable insights.
 - Interactive Plotly dashboards for sentiment mix, category satisfaction, and rating trends.
 - Compact e-commerce mode selector with Default, Light, and Dark options.
+- Dark-mode file uploader styling fix so the Browse files button remains visible.
 - Processed review export as CSV.
 - Analysis history stored per authenticated user.
 
+## Dashboard Tabs
+
+After login and data loading, the analyzer shows these dashboard tabs:
+
+- **Overview**: Displays sentiment mix, category satisfaction, and rating trend charts using interactive Plotly visualizations.
+- **SQL Insights**: Shows customer satisfaction summaries, product risk tables, keyword behavior, raw SQL execution, and a plain-English AI data assistant for common analytics questions.
+- **ABSA**: Shows aspect-level sentiment summaries and lets you inspect review examples for each product aspect.
+- **Support Drafts**: Lets sellers select a negative review and generate a personalized response draft.
+- **Authenticity**: Scores reviews for possible fake, incentivized, bot-like, or anomalous patterns.
+- **Benchmarking**: Accepts multiple competitor or brand datasets and compares performance side-by-side.
+- **Reports**: Generates a downloadable PDF report and opens an email draft for stakeholder sharing.
+- **Classification**: Displays the sentiment classification model details, tuning mode, accuracy, classification report, and confusion matrix.
+- **Feature Selection**: Lists important TF-IDF and chi-square terms that help distinguish sentiment classes.
+- **Customer Feedback**: Extracts customer feedback themes, action items, positive feedback, negative issues, neutral feedback, and top keywords by sentiment.
+- **Data Preview**: Shows the processed review dataset and provides a CSV download for analyzed reviews.
+
+## Live URL Import
+
+The dashboard includes a **Live review import from product URL** expander above the main analyzer. Paste a product URL and click **Fetch live reviews** to attempt importing reviews directly into the analyzer.
+
+Some marketplaces load reviews dynamically or block scraping, so URL import is best-effort. CSV and Excel upload remains the most reliable workflow.
+
+## Plain-English SQL Examples
+
+```text
+Show me all categories where the average rating dropped below 3 in March
+Show negative products
+Show sentiment summary
+Show products by rating
+```
+
+The assistant only executes generated `SELECT` queries and blocks write-style SQL keywords such as `DELETE`, `UPDATE`, `INSERT`, `ALTER`, and `DROP`.
 
 ## Folder Structure
 
@@ -56,6 +98,7 @@ model_tuning/
 deployment/
   app_config.py
   review_analyzer.db
+advanced_features.py
 app.py
 auth.py
 database.py
