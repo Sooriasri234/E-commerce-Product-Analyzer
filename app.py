@@ -214,7 +214,7 @@ def analyzer_page() -> None:
         else:
             raw_df = load_dataset(uploaded)
             file_name = uploaded.name if uploaded else "sample_reviews.csv"
-        normalized = normalize_review_dataset(raw_df)
+        normalized = normalize_review_dataset(raw_df) #Data cleaning and preprocessing step, including text normalization and validation of required columns. 
     except Exception as exc:
         st.error(str(exc))
         return
@@ -223,7 +223,7 @@ def analyzer_page() -> None:
         st.warning("The dataset has no valid review text after preprocessing.")
         return
 
-    analyzed, model, tuning_info = add_predictions(normalized)
+    analyzed, model, tuning_info = add_predictions(normalized) #Machine learning classification step where a text classification model is trained and used to predict sentiment labels for each review, along with confidence scores.
     aspect_summary, aspect_detail = analyze_aspects(analyzed)
     authenticity = authenticity_scores(analyzed)
     processed_path = save_processed_dataset(analyzed)
@@ -255,7 +255,7 @@ def analyzer_page() -> None:
         ]
     )
 
-    with tabs[0]:
+    with tabs[0]: ##Visualizations of sentiment distribution, category satisfaction, and rating trends to provide a quick overview of customer feedback and product performance.
         left, right = st.columns([1, 1])
         with left:
             st.subheader("Sentiment mix")
@@ -266,7 +266,7 @@ def analyzer_page() -> None:
         st.subheader("Rating trend")
         st.plotly_chart(trend_line(analyzed), use_container_width=True)
 
-    with tabs[1]:
+    with tabs[1]: ##SQL-generated insights into customer satisfaction patterns and product performance.
         st.subheader("SQL-generated customer satisfaction summary")
         sql_summary = satisfaction_summary(analyzed)
         st.dataframe(sql_summary, use_container_width=True, hide_index=True)
@@ -305,7 +305,7 @@ def analyzer_page() -> None:
                     except Exception as exc:
                         st.error(f"AI data assistant error: {exc}")
 
-    with tabs[2]:
+    with tabs[2]: ##Aspect-Based Sentiment Analysis (ABSA) results showing sentiment breakdown by individual product aspects.
         st.subheader("Aspect-Based Sentiment Analysis")
         st.caption("Sentiment is broken down by product aspects such as performance, battery life, quality, shipping, support, price, comfort, design, and ease of use.")
         if aspect_summary.empty:
@@ -321,7 +321,7 @@ def analyzer_page() -> None:
                 hide_index=True,
             )
 
-    with tabs[3]:
+    with tabs[3]: ##Automated customer support response drafts.
         st.subheader("Automated Customer Support Drafts")
         negative_reviews = analyzed[analyzed["predicted_sentiment"] == "Negative"].copy()
         if negative_reviews.empty:
@@ -337,7 +337,7 @@ def analyzer_page() -> None:
             st.write(selected_review["review_text"])
             st.text_area("Draft seller response", draft_support_response(selected_review, aspect_detail), height=190)
 
-    with tabs[4]:
+    with tabs[4]: ##Heuristic-based review authenticity and fake review detection results.
         st.subheader("Review Authenticity / Fake Review Detector")
         st.caption("A heuristic anomaly model flags duplicate text, short reviews, rating/sentiment mismatches, heavy punctuation, and review bursts.")
         risk_cols = st.columns(3)
